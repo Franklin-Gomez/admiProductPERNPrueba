@@ -1,14 +1,10 @@
 // Configuracion del server
 import express from 'express'
+import router from './router'
 
 // instancia del servidor
 const server = express()
 
-server.get('/' , ( req , res ) => { 
-    res.send('hola mundo x2')
-})
+server.use('/api/products' , router)
 
-
-server.listen( 4000 , () => { 
-    console.log('Desde el puerto 4000')
-} )
+export default server
