@@ -1,10 +1,10 @@
 import { Router } from "express"
+import { getAllProducts } from "./handlers/products"
+
 
 const router = Router()
 
-router.get('/' , ( req , res ) => { 
-    res.send('hola mundo x2')
-})
+router.get('/' , getAllProducts )
 
 router.post('/' , ( req , res ) => { 
     res.send('hola mundo desde post')
