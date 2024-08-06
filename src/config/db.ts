@@ -1,6 +1,9 @@
 import { Sequelize } from "sequelize";
+import dotenv from 'dotenv'
+
+dotenv.config() // traernos las variables de entorno
 
 //const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname') // Example for postgres
 
-export const db = new Sequelize('postgresql://rest_api_node_typescript_lmfs_user:hfvhxrYGjgMEqBRznvDXWhMGeD2rtmdM@dpg-cqdb7mtumphs73dv4a30-a.oregon-postgres.render.com/rest_api_node_typescript_lmfs?ssl=true') 
+export const db = new Sequelize(process.env.DATA_BASE_URL) 
 
