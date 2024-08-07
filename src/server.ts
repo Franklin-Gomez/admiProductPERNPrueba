@@ -20,6 +20,9 @@ connectDB();
 // instancia del servidor
 const server = express()
 
+// leer datos de server
+server.use(express.json())
+
 server.use('/api/products' , router)
 
 export default server
