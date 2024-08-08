@@ -1,6 +1,7 @@
 import { Request , Response } from "express"
 import Prueba from "../models/Products.models"
 import { param } from "express-validator"
+import { where } from "sequelize"
 
 // get all products
 export const getAllProducts = async ( req : Request , res : Response ) => {
@@ -50,6 +51,33 @@ export const createProduct =  async ( req : Request , res : Response ) => {
 
     // respuesta que mandamos al Client o FronEnt
     res.json( productSaved )
+}
+
+// update producto
+export const updateProduct = async( req : Request , res : Response) => { 
+    try {
+        
+        // producto que queremos actualizar
+        const product = await  Prueba.findByPk( req.params.id )
+
+        if( !product ) { 
+            return res.status(400).json({error : 'Producto Invalido'})
+        }
+        
+        // nueva informacion
+        const newProduct = req.body
+
+        // actualizando el registro de la db con la nueva informacion
+        await product.update( newProduct )
+
+        // devolvemos el producto actualizado
+        res.status(200).json({ data : product })
+
+    } catch (error) {
+
+        console.log( error )
+
+    }
 }
 
 // update only availability

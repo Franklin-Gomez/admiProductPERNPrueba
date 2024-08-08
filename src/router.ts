@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getAllProducts , createProduct, getProductById } from "./handlers/products"
+import { getAllProducts , createProduct, getProductById, updateProduct, updateAvailability } from "./handlers/products"
 import { body , param} from "express-validator"
 import { handlesInputsErrors } from "./middleware/handleInputsErrors"
 
@@ -19,6 +19,12 @@ router.get('/:id' ,
     handlesInputsErrors,
 
 getProductById)
+
+// update todo el producto
+router.put('/:id' , updateProduct)
+
+// update availability 
+router.patch('/:id' , updateAvailability)
 
 // crear el producto
 router.post('/' , 
