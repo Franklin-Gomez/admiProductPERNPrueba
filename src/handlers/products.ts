@@ -58,7 +58,7 @@ export const updateProduct = async( req : Request , res : Response) => {
     try {
         
         // producto que queremos actualizar
-        const product = await  Prueba.findByPk( req.params.id )
+        const product = await Prueba.findByPk( req.params.id )
 
         if( !product ) { 
             return res.status(400).json({error : 'Producto Invalido'})
@@ -81,8 +81,27 @@ export const updateProduct = async( req : Request , res : Response) => {
 }
 
 // update only availability
-export const updateAvailability = ( req : Request , res : Response ) => { 
-    res.send('hola mundo x2')   
+export const updateAvailability = async ( req : Request , res : Response ) => { 
+    
+    try {
+        
+        // seleccionamos el elemento
+        const product = await Prueba.findByPk( req.params.id )
+
+        // cambiamos la propiedadad
+        product.availability = !product.dataValues.availability
+
+        // guardamos esta instancia en la database
+        await product.save()
+
+        // devolvemos
+        res.status(200).json( product )
+
+    } catch (error) {
+
+        console.log( error )
+
+    }
 }
 
 // delete Product
