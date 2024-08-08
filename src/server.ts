@@ -5,6 +5,7 @@ import { db } from './config/db'
 
 // conectar a db
 export const connectDB = async () => { 
+
     try {
         await db.authenticate();
         db.sync() // sincronizacion los modelos en automatico
@@ -13,6 +14,7 @@ export const connectDB = async () => {
         console.error('Unable to connect to the database:', error);
         console.log( 'conexion errronea')
     }
+
 }
 
 connectDB();
@@ -20,8 +22,9 @@ connectDB();
 // instancia del servidor
 const server = express()
 
-// leer datos de server
+// leer datos del formulario
 server.use(express.json())
+
 
 server.use('/api/products' , router)
 
