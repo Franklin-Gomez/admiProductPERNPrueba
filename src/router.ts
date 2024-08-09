@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getAllProducts , createProduct, getProductById, updateProduct, updateAvailability } from "./handlers/products"
+import { getAllProducts , createProduct, getProductById, updateProduct, updateAvailability, deleteProduct } from "./handlers/products"
 import { body , param} from "express-validator"
 import { handlesInputsErrors } from "./middleware/handleInputsErrors"
 
@@ -42,6 +42,9 @@ router.post('/' ,
     handlesInputsErrors,
     
 createProduct )
+
+// delete products
+router.delete('/:id' , deleteProduct )
 
 
 export default router

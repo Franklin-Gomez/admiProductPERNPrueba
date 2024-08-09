@@ -1,7 +1,6 @@
 import { Request , Response } from "express"
 import Prueba from "../models/Products.models"
-import { param } from "express-validator"
-import { where } from "sequelize"
+
 
 // get all products
 export const getAllProducts = async ( req : Request , res : Response ) => {
@@ -105,7 +104,19 @@ export const updateAvailability = async ( req : Request , res : Response ) => {
 }
 
 // delete Product
-export const deleteProduct = ( req : Request , res : Response ) => { 
-    res.send('hola mundo x2')   
+export const deleteProduct = async  ( req : Request , res : Response ) => { 
+    
+    //comprobamos que el elemento exista
+    const product = await Prueba.findByPk( req.params.id)
+
+    if( !product ) { 
+        return res.status(400).json({ error : 'producto no valido'})
+    }
+
+    // eliminar el registro
+    await product.destroy()
+
+    // mensaje de respuesta
+    res.json({ data  : 'producto eliminado' })
 }
 
