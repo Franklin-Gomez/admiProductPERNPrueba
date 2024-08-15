@@ -42,7 +42,13 @@ router.put('/:id' ,
 updateProduct)
 
 // update availability 
-router.patch('/:id' , updateAvailability)
+router.patch('/:id' , 
+    
+    param('id').isInt().withMessage('id no valido'),
+
+    handlesInputsErrors,
+
+updateAvailability)
 
 // crear el producto
 router.post('/' , 
@@ -62,7 +68,13 @@ router.post('/' ,
 createProduct )
 
 // delete products
-router.delete('/:id' , deleteProduct )
+router.delete('/:id' , 
+    
+    param('id').isInt().withMessage('Id no valido'),
+
+    handlesInputsErrors,
+
+deleteProduct )
 
 
 export default router
