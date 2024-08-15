@@ -14,14 +14,32 @@ router.get('/:id' ,
 
     // validation
     param('id').isInt().withMessage('seleccion no valida'),
-    
+
     // errores
     handlesInputsErrors,
 
 getProductById)
 
 // update todo el producto
-router.put('/:id' , updateProduct)
+router.put('/:id' , 
+    
+    param('id').isInt().withMessage('seleccion no valida'),
+
+    body('name')
+        .notEmpty().withMessage('Debes incluir un nombre'),
+    
+    body('price')
+        .isNumeric().withMessage('Debe ser un numero')
+        .notEmpty().withMessage('Debes incluir un precio')
+        .custom( value => value > 0).withMessage('precio no valido'),
+
+    body('avalability')
+        .isBoolean().withMessage('no es booleano'),
+
+    //errores
+    handlesInputsErrors,
+    
+updateProduct)
 
 // update availability 
 router.patch('/:id' , updateAvailability)
