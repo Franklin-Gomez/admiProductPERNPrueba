@@ -1,6 +1,31 @@
 import server from "../../server"
 import request from "supertest"
 
+
+describe('create products' , () => { 
+    it('create correct product' , async () => { 
+        const product = await request(server).post('/api/products/').send({
+            name : "xbox one X",
+            price : 200,
+            availability : true
+        })
+
+        expect(product.status).toBe(200)
+        expect(product.header['content-type']).toMatch(/json/)
+        expect(product.body).toHaveProperty('id')
+
+    })
+
+    it('create wrong product' , async () => { 
+        const product = await  request(server).post('/api/products/').send({})
+
+        expect(product.status).toBe(400)
+        expect(product.body).toHaveProperty('errors')
+        expect(product.body.errors[0].msg).toMatch('El nombre no puede ir vacio')
+    })
+})
+
+
 describe('test products endpoints' , () => { 
     
     it('get all products /' ,  async () => { 
@@ -18,7 +43,7 @@ describe('test products endpoints' , () => {
 
 describe( 'get selected product ', () => { 
     it('get the correct products /:id' , async () => { 
-        const products = await request(server).get('/api/products/14')
+        const products = await request(server).get('/api/products/1')
     
         expect(products.status).toBe(200)
         expect(products.headers['content-type']).toMatch(/json/)
@@ -46,27 +71,3 @@ describe( 'get selected product ', () => {
 })
 
 
-describe('create products' , () => { 
-    it('create correct product' , async () => { 
-        const product = await request(server).post('/api/products/').send({
-            name : "xbox one X",
-            price : 200,
-            availability : true
-        })
-
-        expect(product.status).toBe(200)
-        expect(product.header['content-type']).toMatch(/json/)
-        expect(product.body).toHaveProperty('id')
-
-    })
-
-    it('create wrong product' , async () => { 
-        const product = await  request(server).post('/api/products/').send({})
-
-        console.log( product)
-
-        expect(product.status).toBe(400)
-        expect(product.body).toHaveProperty('errors')
-        expect(product.body.errors[0].msg).toMatch('El nombre no puede ir vacio')
-    })
-})
